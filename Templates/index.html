@@ -23,12 +23,11 @@
 
     <ul>
         {% for post in blogpost %}
-        <li><a href='' style = 'text-decoration:none;'><di><font size = '6'><b>{{post.name}}</b></font><div></a>
+        <li><a href='/blog?id={{post.id}}' style = 'text-decoration:none;'><div><font size = '6'><b>{{post.name}}</b></font></div></a>
+           
             <br>
             {{post.body}}
-            
-                
-                
+               
            
             <hr />
         </li>

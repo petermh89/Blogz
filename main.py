@@ -22,19 +22,38 @@ class Blog(db.Model):
 def index():
     return redirect('/blog')
 
+
 @app.route('/blog', methods=['POST', 'GET'] ) 
-def blog(): 
- 
+def blog():    
     blogpost = Blog.query.all()
+    blogid = request.args.get('id')
+    
+    if blogid == None:
+        return render_template('index.html',title="Build a blog",blogpost=blogpost) 
+    
+    else:
+        blogpage = Blog.query.get(blogid)
+        
+        
+       
+        return render_template('post.html',blogpage=blogpage)
+        
+        
 
-    return render_template('index.html',title="Build a blog",blogpost=blogpost) 
+    
+   
 
+    
+
+   
 
 @app.route('/add', methods = ['POST','GET'])
 def newpost():
     newpost_error = ''
     body_error = ''
     
+   
+
     if request.method == "GET":
         return render_template('newpost.html',title='New blog entry',newpost_error=newpost_error, body_error=body_error)    
 
@@ -44,6 +63,7 @@ def newpost():
         new_post = Blog(blog_name,blog_body)
         db.session.add(new_post)
         db.session.commit()
+        blogid = new_post.id
 
         if blog_name == '':
             newpost_error = 'Your new blog needs a title'
@@ -51,14 +71,16 @@ def newpost():
         elif blog_body=='':
             body_error = 'You need to add some content to your blog post'    
 
-    if not newpost_error and not body_error:    
+    if not newpost_error and not body_error:   
+        
+        
+        
     
-        return redirect('/blog')
+        return redirect('/blog?id={}'.format(blogid))
     else:
         return render_template('newpost.html',title='New blog entry',newpost_error=newpost_error, body_error=body_error)
 
 
-  
 
 
 
