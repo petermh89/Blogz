@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href = "/">Home</a> <a href="/add">New post</a> 
+
+<h1 align = "center">Login</h1>
+<form action="/login" method= "POST">
+    
+    <label for='un'> Username
+    <input id='un' type='text' name='username' value='{{username}}'>
+    </label>
+    <p class="error">{{user_error}}</p>
+    <br>
+    <br>
+    
+    <label for='pass'>Password
+    <input id='pass' type='password'name="password" value='{{password}}'>
+    </label>
+    <p class="error">{{password_error}}</p>
+    <br>
+    <br>
+    <p class="error">{{match_error}}</p>
+    <input type ="submit">
+
+    <p>Don't have an account? <a href = '/signup'>Signup</a></p>
+    
+
+
+{% endblock %}

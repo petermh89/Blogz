@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<a href = "/blog">Main blog page</a> <a href="/add">Add new blog entry</a>
+<a href ="/">Home</a> <a href="/add">Add new blog entry</a>
 <br>
 <br>    
 <h1  align = "center">{{blogpage.name}}</h1>
 
 <p>{{blogpage.body}}</p>
-
+<p>written by <a href="/blog?user={{blogpage.owner_id}}">{{blogpage.owner.username}}</a>
 {% endblock %}
