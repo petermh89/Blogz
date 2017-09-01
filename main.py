@@ -34,8 +34,6 @@ class User(db.Model):
 
 
 
-
-
 @app.route('/', methods=['POST', 'GET'])
 def index():
     user_list = User.query.all()
@@ -50,8 +48,6 @@ def blog():
     user_name = request.args.get('user')
 
     
-
-
     if user_name != None:
         posted = Blog.query.filter_by(owner_id =user_name)
         return render_template('display.html',posted=posted)
@@ -67,7 +63,6 @@ def blog():
     
         
 
-
 @app.route('/add', methods = ['POST','GET'])
 def newpost():
     newpost_error = ''
@@ -79,12 +74,10 @@ def newpost():
 
 
 
-
     if request.method == 'POST':
         blog_name = request.form['newpost']
         blog_body = request.form['body']
-        
-        
+                
 
         if blog_name == '':
             newpost_error = 'Your new blog needs a title'
@@ -107,10 +100,9 @@ def newpost():
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup','index','blog']
+    allowed_routes = ['login', 'signup','index','blog','add']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
-
 
 
 
@@ -136,24 +128,16 @@ def login():
     return render_template('login.html')
    
 
-    
-       
-
 
 def check(x):
     message =''
     if len(x) >= 3 and len(x) <= 20 and x != "":
         return message
-
+    
     else:
         message = "must be between 3-20 characters" 
         return message
     
-
-
-
-
-
 
 
 @app.route('/signup',methods = ['GET','POST'])
@@ -167,6 +151,8 @@ def signup():
     match = ''
    
     if request.method == "POST":
+        
+        
         username = request.form['username']
         password = request.form['password']
         verifypassword = request.form['verifypassword']
@@ -174,7 +160,14 @@ def signup():
 
         user_error = check(username)
         password_error = check(password)
-        
+
+        for user in username:
+            if user == " ":
+                user_error = "No spaces allowed in your Username"
+
+        for i in password:
+            if i == " ":
+                password_error = "No spaces allowed in your password"
         if password != verifypassword:
             verify_error = 'Passwords do not match'
 

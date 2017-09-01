@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<a href = "/">Home</a> <a href="/add">New post</a><a href='/blog'></a> <a href="/login">login</a> <a href="/logout">logout</a>
 <h1 align='center'>Blog users</h1>
+<br>
+
+
 {% if user_list|length == 0 %}
 <p>No blog posts yet</p>
 {% else %}
 
 {% for user in user_list %}
 
-<li align='left'><a href='/blog?user={{user.id}}' style = 'text-decoration:none;'><font size = '5'><b>{{user.username}}</b></font></a>
+<li><a href='/blog?user={{user.id}}' style = 'text-decoration:none;'><font size = '5'><b>{{user.username}}</b></font></a>
 
        
    
 
 </li>
+<hr />
 {% endfor %}
 </ul>
 {% endif %}
